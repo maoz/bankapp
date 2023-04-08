@@ -6,35 +6,52 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
-import "./Tab1.css";
+import "./Status.css";
 import { IonAlert, IonButton } from "@ionic/react";
+import { ReadData } from "../utils/proxy";
+import { useDispatch } from "react-redux";
+import { setStatusHeaderAction } from "../store/slice";
+import { useEffect } from "react";
+import { getOshHeader } from "../store/getters";
 
-const Tab1: React.FC = () => {
+const Status: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const { OshHeader } = {
+    OshHeader: getOshHeader(),
+  };
+
+  useEffect(() => {
+    ReadData().then((res) => {
+      dispatch(setStatusHeaderAction(Object.keys(res.data)[0]));
+    });
+  }, []);
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          <IonTitle>מצב חשבון</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
+            <IonTitle size="large">מצב חשבון</IonTitle>
           </IonToolbar>
         </IonHeader>
         <ExploreContainer
-          name="Tab 1 page"
+          name={OshHeader}
           content={
             <>
               <IonButton id="present-alert">Click Me</IonButton>
-              <IonAlert
+              {/* <IonAlert
                 trigger="present-alert"
                 header="Alert"
                 subHeader="Important message"
                 message="This is an alert!"
                 buttons={["OK"]}
-              ></IonAlert>
+              ></IonAlert> */}
             </>
           }
         />
@@ -43,4 +60,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default Status;

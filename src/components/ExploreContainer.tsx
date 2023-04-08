@@ -1,7 +1,7 @@
 import "./ExploreContainer.css";
 
 interface ContainerProps {
-  name: string;
+  name: String;
   content: any;
 }
 

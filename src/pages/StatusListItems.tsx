@@ -23,19 +23,19 @@ const StatusListItems: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <h3>{item["תאריך"]}</h3>
+                <h6>{item["תאריך"]}</h6>
               </IonCol>
               <IonCol>
-                <h3>{item["הפעולה"]}</h3>
+                <h6>{item["הפעולה"]}</h6>
               </IonCol>
               <IonCol>
-                <h3 className="green-color">{fixNumber(item["זכות"])}</h3>
+                <h6 className="green-color">{fixNumber(item["זכות"])}</h6>
               </IonCol>
               <IonCol>
-                <h3 className="red-color">{fixNumber(item["חובה"])}</h3>
+                <h6 className="red-color">{fixNumber(item["חובה"])}</h6>
               </IonCol>
               <IonCol>
-                <h3>{fixNumber(item["יתרה בש''ח"])}</h3>
+                <h6>{fixNumber(item["יתרה בש''ח"])}</h6>
               </IonCol>
             </IonRow>
           </IonGrid>

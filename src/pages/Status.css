@@ -1,0 +1,11 @@
+.list-item {
+  display: flex !important;
+  column-gap: 15px;
+}
+
+.green-color {
+  color: #69bb7b;
+}
+.red-color {
+  color: #b75c5c;
+}

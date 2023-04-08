@@ -7,19 +7,9 @@ interface ContainerProps {
 
 const ExploreContainer: React.FC<ContainerProps> = ({ name, content }) => {
   return (
-    <div className="container">
-      <strong>{name}</strong>
+    <div className="center-text">
+      <h2>{name}</h2>
       <div>{content}</div>
-      <p>
-        Explore{" "}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://ionicframework.com/docs/components"
-        >
-          UI Components
-        </a>
-      </p>
     </div>
   );
 };

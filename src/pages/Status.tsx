@@ -10,9 +10,10 @@ import "./Status.css";
 import { IonAlert, IonButton } from "@ionic/react";
 import { ReadData } from "../utils/proxy";
 import { useDispatch } from "react-redux";
-import { setStatusHeaderAction } from "../store/slice";
+import { setCurrentStatusAction, setStatusHeaderAction } from "../store/slice";
 import { useEffect } from "react";
 import { getOshHeader } from "../store/getters";
+import StatusListItems from "./StatusListItems";
 
 const Status: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,9 @@ const Status: React.FC = () => {
 
   useEffect(() => {
     ReadData().then((res) => {
-      dispatch(setStatusHeaderAction(Object.keys(res.data)[0]));
+      const statusKey = Object.keys(res.data)[0];
+      dispatch(setStatusHeaderAction(statusKey));
+      dispatch(setCurrentStatusAction(res.data[statusKey]));
     });
   }, []);
 
@@ -40,21 +43,7 @@ const Status: React.FC = () => {
             <IonTitle size="large">מצב חשבון</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer
-          name={OshHeader}
-          content={
-            <>
-              <IonButton id="present-alert">Click Me</IonButton>
-              {/* <IonAlert
-                trigger="present-alert"
-                header="Alert"
-                subHeader="Important message"
-                message="This is an alert!"
-                buttons={["OK"]}
-              ></IonAlert> */}
-            </>
-          }
-        />
+        <ExploreContainer name={OshHeader} content={<StatusListItems />} />
       </IonContent>
     </IonPage>
   );

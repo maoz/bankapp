@@ -1,0 +1,7 @@
+{
+  "name": "bankapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

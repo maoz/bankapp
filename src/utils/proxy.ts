@@ -20,3 +20,12 @@ export function ReadCategories(date: string) {
     Key: bankJobAppKey,
   });
 }
+
+export function ReadAllCategoriesTemplates() {
+  let fixdate = "20230409"; // formatDate(new Date(Date.now()), "yyyymmdd");
+  return axios.post(`https://bank-job.vercel.app/Read`, {
+    TableName: "Categories",
+    RowID: fixdate,
+    Key: bankJobAppKey,
+  });
+}

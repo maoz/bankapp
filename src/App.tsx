@@ -42,8 +42,12 @@ import "./theme/variables.css";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setCurrentDateAction } from "./store/slice";
+import {
+  setCategoriesTemplatesAction,
+  setCurrentDateAction,
+} from "./store/slice";
 import { formatDate } from "./utils/helpers";
+import { ReadAllCategoriesTemplates } from "./utils/proxy";
 setupIonicReact();
 defineCustomElements(window);
 
@@ -52,6 +56,10 @@ const App: React.FC = () => {
   useEffect(() => {
     const date = formatDate(new Date(Date.now()), "yyyy-mm-dd");
     dispatch(setCurrentDateAction(date));
+
+    ReadAllCategoriesTemplates().then((res: any) => {
+      dispatch(setCategoriesTemplatesAction(res.data));
+    });
   });
   return (
     <IonApp>

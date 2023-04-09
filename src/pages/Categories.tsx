@@ -25,7 +25,7 @@ const Categories: React.FC = () => {
     ReadCategories(date).then((res) => {
       dispatch(setCategoriesAction(res.data));
     });
-  }, []);
+  }, [date]);
 
   return (
     <IonPage>

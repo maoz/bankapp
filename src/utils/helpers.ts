@@ -11,3 +11,8 @@ export function formatDate(date: Date, format: string) {
 
   return format.replace(/mm|dd|yyyy/gi, (matched) => map[matched]);
 }
+
+export function fixNumber(number: string) {
+  const val = Number.parseFloat(number);
+  return isNaN(val) ? "" : val.toLocaleString("he-IL");
+}

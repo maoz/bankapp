@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentStatusAction, setStatusHeaderAction } from "../store/slice";
 import { useEffect } from "react";
 import { getOshHeader } from "../store/getters";
-import StatusListItems from "./StatusListItems";
+import StatusListItems from "../components/StatusListItems";
 
 const Status: React.FC = () => {
   const dispatch = useDispatch();

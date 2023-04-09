@@ -2,7 +2,8 @@ import { useDispatch } from "react-redux";
 import { getCurrentStatus } from "../store/getters";
 
 import { IonCol, IonGrid, IonItem, IonLabel, IonRow } from "@ionic/react";
-import "./Status.css";
+import "./StatusListItems.css";
+import { fixNumber } from "../utils/helpers";
 
 const StatusListItems: React.FC = () => {
   const dispatch = useDispatch();
@@ -11,15 +12,10 @@ const StatusListItems: React.FC = () => {
     CurrentStatus: getCurrentStatus(),
   };
 
-  const fixNumber = (number: string) => {
-    const val = Number.parseFloat(number);
-    return isNaN(val) ? "" : val.toLocaleString("he-IL");
-  };
-
   return (
     <>
-      {CurrentStatus.map((item: any) => (
-        <IonItem>
+      {CurrentStatus.map((item: any, index: number) => (
+        <IonItem key={index}>
           <IonGrid>
             <IonRow>
               <IonCol>

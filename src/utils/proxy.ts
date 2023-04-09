@@ -11,3 +11,12 @@ export function ReadData() {
     Key: bankJobAppKey,
   });
 }
+
+export function ReadCategories() {
+  let date = "20230407"; // formatDate(new Date(Date.now()), "yyyymmdd");
+  return axios.post(`https://bank-job.vercel.app/Read`, {
+    TableName: "CategoryTable",
+    RowID: date,
+    Key: bankJobAppKey,
+  });
+}

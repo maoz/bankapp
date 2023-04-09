@@ -4,11 +4,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface BankState {
   StatusHeader: String;
   CurrentStatus: any;
+  Categories: any;
 }
 
 const initialState: BankState = {
   StatusHeader: "",
   CurrentStatus: [],
+  Categories: [],
 };
 
 export const bankSlice = createSlice({
@@ -21,6 +23,9 @@ export const bankSlice = createSlice({
     setCurrentStatus: (state, action: PayloadAction<any>) => {
       state.CurrentStatus = action.payload;
     },
+    setCategories: (state, action: PayloadAction<any>) => {
+      state.Categories = action.payload;
+    },
   },
 });
 
@@ -28,6 +33,7 @@ export const bankSlice = createSlice({
 export const {
   setStatusHeader: setStatusHeaderAction,
   setCurrentStatus: setCurrentStatusAction,
+  setCategories: setCategoriesAction,
 } = bankSlice.actions;
 
 export default bankSlice.reducer;

@@ -6,3 +6,6 @@ export const getOshHeader = () =>
 
 export const getCurrentStatus = () =>
   useSelector((state: RootState) => state.bank.CurrentStatus);
+
+export const getCategories = () =>
+  useSelector((state: RootState) => state.bank.Categories);

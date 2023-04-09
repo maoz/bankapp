@@ -10,9 +10,15 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { analyticsOutline, ellipse, square, triangle } from "ionicons/icons";
+import {
+  analyticsOutline,
+  appsOutline,
+  ellipse,
+  square,
+  triangle,
+} from "ionicons/icons";
 import Status from "./pages/Status";
-import Tab2 from "./pages/Tab2";
+import Categories from "./pages/Categories";
 import Tab3 from "./pages/Tab3";
 
 /* Core CSS required for Ionic components to work properly */
@@ -45,8 +51,8 @@ const App: React.FC = () => (
           <Route exact path="/status">
             <Status />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/categories">
+            <Categories />
           </Route>
           <Route path="/tab3">
             <Tab3 />
@@ -60,9 +66,9 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={analyticsOutline} />
             <IonLabel>מצב חשבון</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
+          <IonTabButton tab="categories" href="/categories">
+            <IonIcon aria-hidden="true" icon={appsOutline} />
+            <IonLabel>קטגוריות</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
             <IonIcon aria-hidden="true" icon={square} />

@@ -11,20 +11,22 @@ const CategoriesListItems: React.FC = () => {
 
   return (
     <>
-      {categories.map((item: any, index: number) => (
-        <IonItem key={index}>
-          <IonGrid>
-            <IonRow>
-              <IonCol>
-                <h6>{item["קטגוריה"]}</h6>
-              </IonCol>
-              <IonCol>
-                <h6>{fixNumber(item["סכום"])}</h6>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonItem>
-      ))}
+      {categories != undefined &&
+        categories.length > 0 &&
+        categories.map((item: any, index: number) => (
+          <IonItem key={index}>
+            <IonGrid>
+              <IonRow>
+                <IonCol>
+                  <h6>{item["קטגוריה"]}</h6>
+                </IonCol>
+                <IonCol>
+                  <h6>{fixNumber(item["סכום"])}</h6>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonItem>
+        ))}
     </>
   );
 };

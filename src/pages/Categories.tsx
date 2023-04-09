@@ -11,12 +11,18 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setCategoriesAction } from "../store/slice";
 import CategoriesListItems from "../components/CategoriesListItems";
+import DatePickerToolbar from "../components/DatePickerToolbar";
+import { getCurrentDate } from "../store/getters";
 
 const Categories: React.FC = () => {
   const dispatch = useDispatch();
 
+  const { date } = {
+    date: getCurrentDate(),
+  };
+
   useEffect(() => {
-    ReadCategories().then((res) => {
+    ReadCategories(date).then((res) => {
       dispatch(setCategoriesAction(res.data));
     });
   }, []);
@@ -26,6 +32,7 @@ const Categories: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>קטגוריות</IonTitle>
+          <DatePickerToolbar />
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

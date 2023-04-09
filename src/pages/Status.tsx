@@ -1,6 +1,7 @@
 import {
   IonContent,
   IonHeader,
+  IonInput,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -12,29 +13,32 @@ import { ReadData } from "../utils/proxy";
 import { useDispatch } from "react-redux";
 import { setCurrentStatusAction, setStatusHeaderAction } from "../store/slice";
 import { useEffect } from "react";
-import { getOshHeader } from "../store/getters";
+import { getCurrentDate, getOshHeader } from "../store/getters";
 import StatusListItems from "../components/StatusListItems";
+import DatePickerToolbar from "../components/DatePickerToolbar";
 
 const Status: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { OshHeader } = {
+  const { OshHeader, date } = {
     OshHeader: getOshHeader(),
+    date: getCurrentDate(),
   };
 
   useEffect(() => {
-    ReadData().then((res) => {
+    ReadData(date).then((res) => {
       const statusKey = Object.keys(res.data)[0];
       dispatch(setStatusHeaderAction(statusKey));
       dispatch(setCurrentStatusAction(res.data[statusKey]));
     });
-  }, []);
+  }, [date]);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>מצב חשבון</IonTitle>
+          <IonTitle slot="start">מצב חשבון</IonTitle>
+          <DatePickerToolbar />
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

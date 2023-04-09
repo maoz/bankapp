@@ -5,12 +5,14 @@ export interface BankState {
   StatusHeader: String;
   CurrentStatus: any;
   Categories: any;
+  CurrentDate: any;
 }
 
 const initialState: BankState = {
   StatusHeader: "",
   CurrentStatus: [],
   Categories: [],
+  CurrentDate: undefined,
 };
 
 export const bankSlice = createSlice({
@@ -26,6 +28,9 @@ export const bankSlice = createSlice({
     setCategories: (state, action: PayloadAction<any>) => {
       state.Categories = action.payload;
     },
+    setCurrentDate: (state, action: PayloadAction<any>) => {
+      state.CurrentDate = action.payload;
+    },
   },
 });
 
@@ -34,6 +39,7 @@ export const {
   setStatusHeader: setStatusHeaderAction,
   setCurrentStatus: setCurrentStatusAction,
   setCategories: setCategoriesAction,
+  setCurrentDate: setCurrentDateAction,
 } = bankSlice.actions;
 
 export default bankSlice.reducer;

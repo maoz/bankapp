@@ -40,44 +40,55 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setCurrentDateAction } from "./store/slice";
+import { formatDate } from "./utils/helpers";
 setupIonicReact();
 defineCustomElements(window);
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/status">
-            <Status />
-          </Route>
-          <Route exact path="/categories">
-            <Categories />
-          </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/status" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="Status" href="/status">
-            <IonIcon aria-hidden="true" icon={analyticsOutline} />
-            <IonLabel>מצב חשבון</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="categories" href="/categories">
-            <IonIcon aria-hidden="true" icon={appsOutline} />
-            <IonLabel>קטגוריות</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const date = formatDate(new Date(Date.now()), "yyyy-mm-dd");
+    dispatch(setCurrentDateAction(date));
+  });
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/status">
+              <Status />
+            </Route>
+            <Route exact path="/categories">
+              <Categories />
+            </Route>
+            <Route path="/tab3">
+              <Tab3 />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/status" />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="Status" href="/status">
+              <IonIcon aria-hidden="true" icon={analyticsOutline} />
+              <IonLabel>מצב חשבון</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="categories" href="/categories">
+              <IonIcon aria-hidden="true" icon={appsOutline} />
+              <IonLabel>קטגוריות</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab3" href="/tab3">
+              <IonIcon aria-hidden="true" icon={square} />
+              <IonLabel>Tab 3</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

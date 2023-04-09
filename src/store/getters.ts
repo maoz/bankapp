@@ -9,3 +9,6 @@ export const getCurrentStatus = () =>
 
 export const getCategories = () =>
   useSelector((state: RootState) => state.bank.Categories);
+
+export const getCurrentDate = () =>
+  useSelector((state: RootState) => state.bank.CurrentDate);

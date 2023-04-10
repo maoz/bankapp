@@ -8,7 +8,7 @@ import {
 import { IonCol, IonGrid, IonItem, IonLabel, IonRow } from "@ionic/react";
 import { fixNumber } from "../utils/helpers";
 import { useState } from "react";
-
+import "./CategoriesListItems.css";
 const CategoriesListItems: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState();
   const { categories, categoriesTemplate } = {
@@ -17,10 +17,12 @@ const CategoriesListItems: React.FC = () => {
   };
 
   function handleClickItem(item: any): void {
-    setSelectedCategory(item);
+    if (item == selectedCategory) {
+      setSelectedCategory(undefined);
+    } else {
+      setSelectedCategory(item);
+    }
   }
-
-  console.log(categoriesTemplate);
 
   return (
     <>
@@ -29,6 +31,7 @@ const CategoriesListItems: React.FC = () => {
         categories.map((item: any, index: number) => (
           <>
             <IonItem
+              color="light"
               button
               key={`Cat${index}`}
               detail={true}
@@ -45,15 +48,23 @@ const CategoriesListItems: React.FC = () => {
                 </IonRow>
               </IonGrid>
             </IonItem>
-            {selectedCategory == item["קטגוריה"] &&
-              categoriesTemplate[item["קטגוריה"]] != undefined &&
-              categoriesTemplate[item["קטגוריה"]].map(
-                (itemCat: any, indexCat: number) => {
-                  <IonItem key={`CatTemp${indexCat}`} detail={false}>
-                    {itemCat["Name"]}
-                  </IonItem>;
-                }
-              )}
+            <div className="categories-container">
+              {selectedCategory == item["קטגוריה"] &&
+                categoriesTemplate[item["קטגוריה"]] != undefined &&
+                categoriesTemplate[item["קטגוריה"]].length > 0 &&
+                categoriesTemplate[item["קטגוריה"]].map(
+                  (itemCat: any, indexCat: number) => (
+                    <IonItem
+                      color="warning"
+                      className="categories-item"
+                      key={`CatTemp${indexCat}`}
+                      detail={false}
+                    >
+                      {itemCat["Name"]}
+                    </IonItem>
+                  )
+                )}
+            </div>
           </>
         ))}
     </>

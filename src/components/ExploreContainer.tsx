@@ -1,3 +1,4 @@
+import { IonItem, IonLabel } from "@ionic/react";
 import "./ExploreContainer.css";
 
 interface ContainerProps {
@@ -7,8 +8,11 @@ interface ContainerProps {
 
 const ExploreContainer: React.FC<ContainerProps> = ({ name, content }) => {
   return (
-    <div className="center-text">
-      <h2>{name}</h2>
+    <div>
+      {/* <h2>{name}</h2> */}
+      <IonItem color="primary" className="header-text">
+        <IonLabel>{name}</IonLabel>
+      </IonItem>
       <div>{content}</div>
     </div>
   );

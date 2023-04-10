@@ -1,0 +1,7 @@
+.categories-item {
+  font-size: small;
+}
+.categories-container {
+  overflow: auto;
+  max-height: 250px;
+}

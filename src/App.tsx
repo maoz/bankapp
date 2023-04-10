@@ -47,7 +47,10 @@ import {
   setCurrentDateAction,
 } from "./store/slice";
 import { formatDate } from "./utils/helpers";
-import { ReadAllCategoriesTemplates } from "./utils/proxy";
+import {
+  ReadAllCategoriesTemplates,
+  ReadCategoriesPrices,
+} from "./utils/proxy";
 setupIonicReact();
 defineCustomElements(window);
 
@@ -59,6 +62,9 @@ const App: React.FC = () => {
 
     ReadAllCategoriesTemplates().then((res: any) => {
       dispatch(setCategoriesTemplatesAction(res.data));
+    });
+    ReadCategoriesPrices().then((res: any) => {
+      console.log(res);
     });
   });
   return (

@@ -23,8 +23,9 @@
   text-decoration: none;
 }
 
-.center-text {
+.header-text {
   text-align: center;
+  font-size: x-large;
 }
 
 .list-container {

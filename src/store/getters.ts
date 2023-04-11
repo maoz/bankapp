@@ -15,3 +15,6 @@ export const getCurrentDate = () =>
 
 export const getCategoriesTemplates = () =>
   useSelector((state: RootState) => state.bank.CategoriesTemplates);
+
+export const getCategoriesPrices = () =>
+  useSelector((state: RootState) => state.bank.CategoriesPrices);

@@ -34,5 +34,5 @@ export function getPrevMonth() {
 
 export function fixNumber(number: string) {
   const val = Number.parseFloat(number);
-  return isNaN(val) ? "" : val.toLocaleString("he-IL");
+  return isNaN(val) ? "" : val.toLocaleString("he-IL") + " ₪";
 }

@@ -43,6 +43,7 @@ import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
+  setCategoriesPricesAction,
   setCategoriesTemplatesAction,
   setCurrentDateAction,
 } from "./store/slice";
@@ -64,7 +65,7 @@ const App: React.FC = () => {
       dispatch(setCategoriesTemplatesAction(res.data));
     });
     ReadCategoriesPrices().then((res: any) => {
-      console.log(res);
+      dispatch(setCategoriesPricesAction(res.data["סיכום קטגוריות"]));
     });
   });
   return (

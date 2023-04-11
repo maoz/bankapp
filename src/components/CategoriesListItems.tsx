@@ -1,19 +1,29 @@
 import { useDispatch } from "react-redux";
 import {
   getCategories,
+  getCategoriesPrices,
   getCategoriesTemplates,
   getCurrentStatus,
 } from "../store/getters";
 
-import { IonCol, IonGrid, IonItem, IonLabel, IonRow } from "@ionic/react";
+import {
+  IonCol,
+  IonGrid,
+  IonItem,
+  IonLabel,
+  IonProgressBar,
+  IonRow,
+} from "@ionic/react";
 import { fixNumber } from "../utils/helpers";
 import { useState } from "react";
 import "./CategoriesListItems.css";
 const CategoriesListItems: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState();
-  const { categories, categoriesTemplate } = {
+
+  const { categories, categoriesTemplate, categoriesPrices } = {
     categories: getCategories(),
     categoriesTemplate: getCategoriesTemplates(),
+    categoriesPrices: getCategoriesPrices(),
   };
 
   function handleClickItem(item: any): void {
@@ -24,16 +34,39 @@ const CategoriesListItems: React.FC = () => {
     }
   }
 
+  function getCategoriesPricesAmountByCategory(category: string) {
+    const element = categoriesPrices.find(
+      (item: any) => item["קטגוריה"] === category
+    );
+    return element != undefined ? element["סכום"] : "";
+  }
+
+  function calcProgress(category: string, amount: string) {
+    const amountLastMonth = getCategoriesPricesAmountByCategory(category);
+    return amountLastMonth != ""
+      ? Number.parseFloat(amount) / Number.parseFloat(amountLastMonth)
+      : 0;
+  }
+
+  function getProgressColor(category: string, amount: string) {
+    const amountLastMonth = getCategoriesPricesAmountByCategory(category);
+    return amountLastMonth != "" &&
+      Number.parseFloat(amount) > Number.parseFloat(amountLastMonth)
+      ? "danger"
+      : "";
+  }
+
   return (
     <>
       {categories != undefined &&
         categories.length > 0 &&
+        categoriesPrices != undefined &&
+        categoriesPrices.length > 0 &&
         categories.map((item: any, index: number) => (
-          <>
+          <div key={`Cat${index}`}>
             <IonItem
               color="light"
               button
-              key={`Cat${index}`}
               detail={true}
               onClick={(e) => handleClickItem(item["קטגוריה"])}
             >
@@ -44,6 +77,21 @@ const CategoriesListItems: React.FC = () => {
                   </IonCol>
                   <IonCol>
                     <h6>{fixNumber(item["סכום"])}</h6>
+                  </IonCol>
+                  <IonCol className="align-progress">
+                    <IonProgressBar
+                      className="progress-width"
+                      color={getProgressColor(item["קטגוריה"], item["סכום"])}
+                      buffer={1}
+                      value={calcProgress(item["קטגוריה"], item["סכום"])}
+                    ></IonProgressBar>
+                  </IonCol>
+                  <IonCol>
+                    <h6>
+                      {fixNumber(
+                        getCategoriesPricesAmountByCategory(item["קטגוריה"])
+                      )}
+                    </h6>
                   </IonCol>
                 </IonRow>
               </IonGrid>
@@ -65,7 +113,7 @@ const CategoriesListItems: React.FC = () => {
                   )
                 )}
             </div>
-          </>
+          </div>
         ))}
     </>
   );

@@ -5,3 +5,12 @@
   overflow: auto;
   max-height: 250px;
 }
+
+.align-progress {
+  align-self: center;
+  text-align: center;
+}
+
+.progress-width {
+  width: 75%;
+}

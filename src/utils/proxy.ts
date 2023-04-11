@@ -41,7 +41,6 @@ export function ReadCategoriesPrices() {
   const year = formatDate(new Date(Date.now()), "yyyy");
 
   let fixdate = "" + month + year; // formatDate(new Date(Date.now()), "yyyymmdd");
-  console.log(fixdate);
   return axios.post(`https://bank-job.vercel.app/Read`, {
     TableName: "CategoriesPrices",
     RowID: fixdate,

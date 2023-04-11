@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { getCurrentDate, getOshHeader } from "../store/getters";
 import StatusListItems from "../components/StatusListItems";
 import DatePickerToolbar from "../components/DatePickerToolbar";
+import { fixNumber } from "../utils/helpers";
 
 const Status: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const Status: React.FC = () => {
   useEffect(() => {
     ReadData(date).then((res) => {
       const statusKey = Object.keys(res.data)[0];
-      dispatch(setStatusHeaderAction(statusKey));
+      dispatch(setStatusHeaderAction(fixNumber(statusKey.split(" ")[1])));
       dispatch(setCurrentStatusAction(res.data[statusKey]));
     });
   }, [date]);

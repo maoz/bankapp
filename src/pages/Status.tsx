@@ -21,18 +21,9 @@ import { fixNumber } from "../utils/helpers";
 const Status: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { OshHeader, date } = {
+  const { OshHeader } = {
     OshHeader: getOshHeader(),
-    date: getCurrentDate(),
   };
-
-  useEffect(() => {
-    ReadData(date).then((res) => {
-      const statusKey = Object.keys(res.data)[0];
-      dispatch(setStatusHeaderAction(fixNumber(statusKey.split(" ")[1])));
-      dispatch(setCurrentStatusAction(res.data[statusKey]));
-    });
-  }, [date]);
 
   return (
     <IonPage>

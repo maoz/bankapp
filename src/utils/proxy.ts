@@ -17,6 +17,15 @@ export function ReadData(date: string) {
   });
 }
 
+export function ReadCardsData(date: string) {
+  let fixdate = date.replaceAll("-", ""); // formatDate(new Date(Date.now()), "yyyymmdd");
+  return axios.post(`https://bank-job.vercel.app/Read`, {
+    TableName: "CARDS",
+    RowID: fixdate,
+    Key: bankJobAppKey,
+  });
+}
+
 export function ReadCategories(date: string) {
   let fixdate = date.replaceAll("-", ""); // formatDate(new Date(Date.now()), "yyyymmdd");
   return axios.post(`https://bank-job.vercel.app/Read`, {

@@ -8,7 +8,6 @@ export function formatDate(date: Date, format: string) {
     yy: date.getFullYear().toString().slice(-2),
     yyyy: date.getFullYear(),
   };
-
   return format.replace(/mm|dd|yyyy/gi, (matched) => map[matched]);
 }
 
@@ -35,4 +34,44 @@ export function getPrevMonth() {
 export function fixNumber(number: string) {
   const val = Number.parseFloat(number);
   return isNaN(val) ? "" : val.toLocaleString("he-IL") + " ₪";
+}
+
+export function getNumberFromString(value: string) {
+  const parsedValue = Number.parseFloat(value);
+  return isNaN(parsedValue) ? 0 : parsedValue;
+}
+
+export function getObjectDictionaryFromArray(
+  arr: any,
+  key: string,
+  valueName: string
+) {
+  return arr.reduce((accumulator: any, value: any) => {
+    return {
+      ...accumulator,
+      [value[key]]: getNumberFromString(value[valueName]),
+    };
+  }, {});
+}
+
+export function convertDataDateToDate(dataDate: string) {
+  var dateParser = /(\d{2})\/(\d{2})\/(\d{4})/;
+  var match = dataDate.match(dateParser);
+  if (match != null) {
+    return new Date(
+      Number.parseInt(match[3]), // year
+      Number.parseInt(match[2]) - 1, // monthIndex
+      Number.parseInt(match[1]) // day
+    );
+  }
+  return new Date();
+}
+
+export function isDateBefore(from: string, to: string) {
+  const d1 = Date.parse(from);
+  const d2 = Date.parse(to);
+  if (d1 < d2) {
+    return true;
+  }
+  return false;
 }

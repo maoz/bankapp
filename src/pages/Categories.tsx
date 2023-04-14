@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { setCategoriesAction } from "../store/slice";
 import CategoriesListItems from "../components/CategoriesListItems";
 import DatePickerToolbar from "../components/DatePickerToolbar";
-import { getCurrentDate } from "../store/getters";
+import { getCurrentDate, getExpenses } from "../store/getters";
 
 const Categories: React.FC = () => {
   const dispatch = useDispatch();

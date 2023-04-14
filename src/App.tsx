@@ -46,28 +46,85 @@ import {
   setCategoriesPricesAction,
   setCategoriesTemplatesAction,
   setCurrentDateAction,
+  setCurrentStatusAction,
+  setExpensesAction,
+  setStatusHeaderAction,
 } from "./store/slice";
-import { formatDate } from "./utils/helpers";
+import {
+  convertDataDateToDate,
+  fixNumber,
+  formatDate,
+  getObjectDictionaryFromArray,
+  getPrevMonth,
+  isDateBefore,
+} from "./utils/helpers";
 import {
   ReadAllCategoriesTemplates,
+  ReadCardsData,
   ReadCategoriesPrices,
+  ReadData,
 } from "./utils/proxy";
+import { getCurrentDate } from "./store/getters";
 setupIonicReact();
 defineCustomElements(window);
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+
+  const { selectedDate } = {
+    selectedDate: getCurrentDate(),
+  };
+
   useEffect(() => {
     const date = formatDate(new Date(Date.now()), "yyyy-mm-dd");
     dispatch(setCurrentDateAction(date));
-
-    ReadAllCategoriesTemplates().then((res: any) => {
-      dispatch(setCategoriesTemplatesAction(res.data));
-    });
-    ReadCategoriesPrices().then((res: any) => {
-      dispatch(setCategoriesPricesAction(res.data["סיכום קטגוריות"]));
-    });
   });
+
+  useEffect(() => {
+    if (selectedDate != undefined) {
+      ReadData(selectedDate).then((res) => {
+        const statusKey = Object.keys(res.data)[0];
+        const data = res.data[statusKey];
+        dispatch(setStatusHeaderAction(fixNumber(statusKey.split(" ")[1])));
+        dispatch(setCurrentStatusAction(data));
+        const year = formatDate(new Date(Date.now()), "yyyy");
+        const prevDate = year + "-" + getPrevMonth() + "-15";
+        let filteredData = data.filter((item: any) => {
+          return isDateBefore(
+            prevDate,
+            formatDate(convertDataDateToDate(item["תאריך"]), "yyyy-mm-dd")
+          );
+        });
+        const obj = getObjectDictionaryFromArray(
+          filteredData,
+          "הפעולה",
+          "חובה"
+        );
+        dispatch(setExpensesAction(obj));
+      });
+
+      ReadCardsData(selectedDate).then((res) => {
+        for (const [key, value] of Object.entries(res.data)) {
+          const obj = getObjectDictionaryFromArray(
+            value,
+            "שם בית עסק",
+            "סכום חיוב בש''ח"
+          );
+          if (!(Object.keys(obj).indexOf("undefined") > -1)) {
+            dispatch(setExpensesAction(obj));
+          }
+        }
+      });
+
+      ReadAllCategoriesTemplates().then((res: any) => {
+        dispatch(setCategoriesTemplatesAction(res.data));
+      });
+      ReadCategoriesPrices().then((res: any) => {
+        dispatch(setCategoriesPricesAction(res.data["סיכום קטגוריות"]));
+      });
+    }
+  }, [selectedDate]);
+
   return (
     <IonApp>
       <IonReactRouter>

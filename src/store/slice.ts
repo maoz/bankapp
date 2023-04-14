@@ -8,6 +8,7 @@ export interface BankState {
   CurrentDate: any;
   CategoriesTemplates: any;
   CategoriesPrices: any;
+  Expenses: any;
 }
 
 const initialState: BankState = {
@@ -17,6 +18,7 @@ const initialState: BankState = {
   CurrentDate: undefined,
   CategoriesTemplates: {},
   CategoriesPrices: [],
+  Expenses: {},
 };
 
 export const bankSlice = createSlice({
@@ -41,6 +43,9 @@ export const bankSlice = createSlice({
     setCategoriesPrices: (state, action: PayloadAction<any>) => {
       state.CategoriesPrices = action.payload;
     },
+    setExpenses: (state, action: PayloadAction<any>) => {
+      state.Expenses = { ...state.Expenses, ...action.payload };
+    },
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   setCurrentDate: setCurrentDateAction,
   setCategoriesTemplates: setCategoriesTemplatesAction,
   setCategoriesPrices: setCategoriesPricesAction,
+  setExpenses: setExpensesAction,
 } = bankSlice.actions;
 
 export default bankSlice.reducer;

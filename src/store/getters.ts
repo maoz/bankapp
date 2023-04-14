@@ -18,3 +18,6 @@ export const getCategoriesTemplates = () =>
 
 export const getCategoriesPrices = () =>
   useSelector((state: RootState) => state.bank.CategoriesPrices);
+
+export const getExpenses = () =>
+  useSelector((state: RootState) => state.bank.Expenses);

@@ -4,6 +4,7 @@ import {
   getCategoriesPrices,
   getCategoriesTemplates,
   getCurrentStatus,
+  getExpenses,
 } from "../store/getters";
 
 import {
@@ -20,10 +21,11 @@ import "./CategoriesListItems.css";
 const CategoriesListItems: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState();
 
-  const { categories, categoriesTemplate, categoriesPrices } = {
+  const { categories, categoriesTemplate, categoriesPrices, expenses } = {
     categories: getCategories(),
     categoriesTemplate: getCategoriesTemplates(),
     categoriesPrices: getCategoriesPrices(),
+    expenses: getExpenses(),
   };
 
   function handleClickItem(item: any): void {
@@ -54,6 +56,16 @@ const CategoriesListItems: React.FC = () => {
       Number.parseFloat(amount) > Number.parseFloat(amountLastMonth)
       ? "danger"
       : "";
+  }
+
+  function getExpensesByName(name: string) {
+    let expenses_items = Object.keys(expenses).find((item: string) =>
+      item.includes(name)
+    );
+    if (expenses_items != undefined) {
+      return expenses[expenses_items];
+    }
+    return 0;
   }
 
   return (
@@ -108,7 +120,7 @@ const CategoriesListItems: React.FC = () => {
                       key={`CatTemp${indexCat}`}
                       detail={false}
                     >
-                      {itemCat["Name"]}
+                      {itemCat["Name"]} , {getExpensesByName(itemCat["Name"])}
                     </IonItem>
                   )
                 )}

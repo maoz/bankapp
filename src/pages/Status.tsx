@@ -8,15 +8,10 @@ import {
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Status.css";
-import { IonAlert, IonButton } from "@ionic/react";
-import { ReadData } from "../utils/proxy";
 import { useDispatch } from "react-redux";
-import { setCurrentStatusAction, setStatusHeaderAction } from "../store/slice";
-import { useEffect } from "react";
-import { getCurrentDate, getOshHeader } from "../store/getters";
+import { getOshHeader } from "../store/getters";
 import StatusListItems from "../components/StatusListItems";
 import DatePickerToolbar from "../components/DatePickerToolbar";
-import { fixNumber } from "../utils/helpers";
 
 const Status: React.FC = () => {
   const dispatch = useDispatch();

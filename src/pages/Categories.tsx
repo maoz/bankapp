@@ -6,7 +6,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
-import { ReadCategories, ReadData } from "../utils/proxy";
+import { ReadCategories } from "../utils/proxy";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setCategoriesAction } from "../store/slice";

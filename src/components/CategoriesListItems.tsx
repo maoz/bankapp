@@ -37,6 +37,9 @@ const CategoriesListItems: React.FC = () => {
   }
 
   function getCategoriesPricesAmountByCategory(category: string) {
+    if (categoriesPrices == undefined) {
+      return "";
+    }
     const element = categoriesPrices.find(
       (item: any) => item["קטגוריה"] === category
     );
@@ -72,8 +75,6 @@ const CategoriesListItems: React.FC = () => {
     <>
       {categories != undefined &&
         categories.length > 0 &&
-        categoriesPrices != undefined &&
-        categoriesPrices.length > 0 &&
         categories.map((item: any, index: number) => (
           <div key={`Cat${index}`}>
             <IonItem

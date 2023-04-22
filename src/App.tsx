@@ -78,29 +78,31 @@ const App: React.FC = () => {
   useEffect(() => {
     const date = formatDate(new Date(Date.now()), "yyyy-mm-dd");
     dispatch(setCurrentDateAction(date));
-  });
+  }, []);
 
   useEffect(() => {
     if (selectedDate != undefined) {
       ReadData(selectedDate).then((res) => {
-        const statusKey = Object.keys(res.data)[0];
-        const data = res.data[statusKey];
-        dispatch(setStatusHeaderAction(fixNumber(statusKey.split(" ")[1])));
-        dispatch(setCurrentStatusAction(data));
-        const year = formatDate(new Date(Date.now()), "yyyy");
-        const prevDate = year + "-" + getPrevMonth() + "-15";
-        let filteredData = data.filter((item: any) => {
-          return isDateBefore(
-            prevDate,
-            formatDate(convertDataDateToDate(item["תאריך"]), "yyyy-mm-dd")
+        if (res.data != "") {
+          const statusKey = Object.keys(res.data)[0];
+          const data = res.data[statusKey];
+          dispatch(setStatusHeaderAction(fixNumber(statusKey.split(" ")[1])));
+          dispatch(setCurrentStatusAction(data));
+          const year = formatDate(new Date(Date.now()), "yyyy");
+          const prevDate = year + "-" + getPrevMonth() + "-15";
+          let filteredData = data.filter((item: any) => {
+            return isDateBefore(
+              prevDate,
+              formatDate(convertDataDateToDate(item["תאריך"]), "yyyy-mm-dd")
+            );
+          });
+          const obj = getObjectDictionaryFromArray(
+            filteredData,
+            "הפעולה",
+            "חובה"
           );
-        });
-        const obj = getObjectDictionaryFromArray(
-          filteredData,
-          "הפעולה",
-          "חובה"
-        );
-        dispatch(setExpensesAction(obj));
+          dispatch(setExpensesAction(obj));
+        }
       });
 
       ReadCardsData(selectedDate).then((res) => {

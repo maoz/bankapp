@@ -31,6 +31,12 @@ export function getPrevMonth() {
     : "" + date.getMonth() + 1;
 }
 
+export function getPrevDayFullDate(dateStr: string) {
+  const date = new Date(dateStr);
+  date.setDate(date.getDate() - 1);
+  return formatDate(date, "yyyy-mm-dd");
+}
+
 export function fixNumber(number: string) {
   const val = Number.parseFloat(number);
   return isNaN(val) ? "" : val.toLocaleString("he-IL") + " ₪";

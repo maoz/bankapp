@@ -40,7 +40,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   setCategoriesPricesAction,
@@ -55,6 +55,7 @@ import {
   fixNumber,
   formatDate,
   getObjectDictionaryFromArray,
+  getPrevDayFullDate,
   getPrevMonth,
   isDateBefore,
 } from "./utils/helpers";
@@ -70,7 +71,6 @@ defineCustomElements(window);
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-
   const { selectedDate } = {
     selectedDate: getCurrentDate(),
   };
@@ -102,27 +102,29 @@ const App: React.FC = () => {
             "חובה"
           );
           dispatch(setExpensesAction(obj));
-        }
-      });
 
-      ReadCardsData(selectedDate).then((res) => {
-        for (const [key, value] of Object.entries(res.data)) {
-          const obj = getObjectDictionaryFromArray(
-            value,
-            "שם בית עסק",
-            "סכום חיוב בש''ח"
-          );
-          if (!(Object.keys(obj).indexOf("undefined") > -1)) {
-            dispatch(setExpensesAction(obj));
-          }
-        }
-      });
+          ReadCardsData(selectedDate).then((res) => {
+            for (const [key, value] of Object.entries(res.data)) {
+              const obj = getObjectDictionaryFromArray(
+                value,
+                "שם בית עסק",
+                "סכום חיוב בש''ח"
+              );
+              if (!(Object.keys(obj).indexOf("undefined") > -1)) {
+                dispatch(setExpensesAction(obj));
+              }
+            }
+          });
 
-      ReadAllCategoriesTemplates().then((res: any) => {
-        dispatch(setCategoriesTemplatesAction(res.data));
-      });
-      ReadCategoriesPrices().then((res: any) => {
-        dispatch(setCategoriesPricesAction(res.data["סיכום קטגוריות"]));
+          ReadAllCategoriesTemplates().then((res: any) => {
+            dispatch(setCategoriesTemplatesAction(res.data));
+          });
+          ReadCategoriesPrices().then((res: any) => {
+            dispatch(setCategoriesPricesAction(res.data["סיכום קטגוריות"]));
+          });
+        } else {
+          dispatch(setCurrentDateAction(getPrevDayFullDate(selectedDate)));
+        }
       });
     }
   }, [selectedDate]);
